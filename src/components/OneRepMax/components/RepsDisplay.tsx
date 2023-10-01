@@ -14,6 +14,7 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
       id: num.toString(),
       weight: calculateWeightForReps(oneRepMax, num),
       reps: num,
+      name: "Bench Press",
     };
   });
 

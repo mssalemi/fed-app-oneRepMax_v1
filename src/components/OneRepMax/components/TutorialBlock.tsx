@@ -10,6 +10,7 @@ export function TutorialBlock({
   exerciseByRepMax: {
     weight: number;
     reps: number;
+    name: string;
   };
   numberOfExercise?: number;
 }) {
@@ -28,12 +29,15 @@ export function TutorialBlock({
     sets: 3,
     reps: exerciseByRepMax.reps,
     weight: traininigWeight,
+    name: exerciseByRepMax.name,
   });
 
   return (
     <LegacyCard.Section>
       <Text variant="bodyMd" fontWeight="bold" as="span">
-        {`${3}x${exerciseByRepMax.reps} @ ${Math.round(traininigWeight)}`}
+        {`${exerciseByRepMax.name} - ${3}x${
+          exerciseByRepMax.reps
+        } @ ${Math.round(traininigWeight)}`}
       </Text>
     </LegacyCard.Section>
   );

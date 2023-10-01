@@ -17,6 +17,7 @@ interface Props {
     id: string;
     weight: number;
     reps: number;
+    name: string;
   }[];
 }
 
@@ -24,11 +25,12 @@ export function RepsDisplayTable({ data, oneRepMax }: Props) {
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(data);
 
-  const rows = data.map(({ reps: num }, index) => {
+  const rows = data.map(({ reps: num, name }, index) => {
     return {
       id: index.toString(),
       weight: calculateWeightForReps(oneRepMax, num),
       reps: num,
+      name: name,
     };
   });
 
@@ -39,6 +41,7 @@ export function RepsDisplayTable({ data, oneRepMax }: Props) {
       return {
         weight: data?.weight || 0,
         reps: data?.reps || 0,
+        name: data?.name || "",
       };
     });
   }, [selectedResources, rows]);

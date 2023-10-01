@@ -9,7 +9,7 @@ function App() {
   return (
     <Page title="All da info you need...">
       <div className="App">
-        <p>Hi, {name} 👽</p>
+        <p>Hi, {name} 👽👽👽</p>
         <OneRepMax />
       </div>
     </Page>

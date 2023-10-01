@@ -9,6 +9,7 @@ import {
 } from "@shopify/polaris";
 
 import { calculateWeightForReps } from "../../../utils/calculateWeightForReps";
+import { TutorialBlock } from "./TutorialBlock";
 
 interface Props {
   oneRepMax: number;
@@ -69,7 +70,7 @@ export function RepsDisplayTable({ data, oneRepMax }: Props) {
 
   return (
     <>
-      <LegacyStack distribution="fillEvenly">
+      <LegacyStack>
         <LegacyCard title="Projected RepMax's from OneRepMax">
           <IndexTable
             resourceName={resourceName}
@@ -83,11 +84,17 @@ export function RepsDisplayTable({ data, oneRepMax }: Props) {
             {rowMarkup}
           </IndexTable>
         </LegacyCard>
-        <LegacyCard title="Sample Workout">
+        <LegacyCard title="Example Workout">
           {tutorialExercises && tutorialExercises.length > 0 && (
             <>
               {tutorialExercises.map((exercise, index) => {
-                return <p>hey</p>;
+                return (
+                  <TutorialBlock
+                    key={index}
+                    exerciseByRepMax={exercise}
+                    numberOfExercise={3}
+                  />
+                );
               })}
             </>
           )}

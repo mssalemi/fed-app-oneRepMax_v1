@@ -1,6 +1,7 @@
 export function calculateWeightForReps(
   oneRepMax: number,
-  reps: number
+  reps: number,
+  trainingWorkout?: boolean
 ): number {
   const repMaxPercentages: number[] = [
     100, 97, 94, 92, 89, 86, 83, 81, 78, 75, 73, 71, 70, 68, 67, 65, 64, 63, 61,
@@ -18,5 +19,7 @@ export function calculateWeightForReps(
   const index = reps - 1;
   const percentage = repMaxPercentages[index];
 
-  return (percentage / 100) * oneRepMax;
+  const trainingWorkoutMax = trainingWorkout ? 0.95 * oneRepMax : oneRepMax;
+
+  return (percentage / 100) * trainingWorkoutMax;
 }

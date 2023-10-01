@@ -25,19 +25,19 @@ export function TutorialBlock({
     true
   );
 
-  console.log({
+  const workoutPart1 = {
     sets: 3,
     reps: exerciseByRepMax.reps,
     weight: traininigWeight,
-    name: exerciseByRepMax.name,
-  });
+    exerciseName: exerciseByRepMax.name,
+  };
 
   return (
     <LegacyCard.Section>
       <Text variant="bodyMd" fontWeight="bold" as="span">
-        {`${exerciseByRepMax.name} - ${3}x${
-          exerciseByRepMax.reps
-        } @ ${Math.round(traininigWeight)}`}
+        {`${workoutPart1.exerciseName} - ${workoutPart1.sets}x${
+          workoutPart1.reps
+        } @ ${Math.round(workoutPart1.weight)}`}
       </Text>
     </LegacyCard.Section>
   );

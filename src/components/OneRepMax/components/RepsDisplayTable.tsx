@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   LegacyStack,
@@ -13,7 +13,7 @@ import { calculateWeightForReps } from "../../../utils/calculateWeightForReps";
 interface Props {
   oneRepMax: number;
   data: {
-    id: number;
+    id: string;
     weight: number;
     reps: number;
   }[];
@@ -22,13 +22,25 @@ interface Props {
 export function RepsDisplayTable({ data, oneRepMax }: Props) {
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(data);
-  const rows = data.map(({ weight, reps: num }, index) => {
+
+  const rows = data.map(({ reps: num }, index) => {
     return {
       id: index.toString(),
       weight: calculateWeightForReps(oneRepMax, num),
       reps: num,
     };
   });
+
+  const tutorialExercises = React.useMemo(() => {
+    return selectedResources.map((id) => {
+      const data = rows.find((row) => row.id === id);
+      console.log(data);
+      return {
+        weight: data?.weight || 0,
+        reps: data?.reps || 0,
+      };
+    });
+  }, [selectedResources, rows]);
 
   const rowMarkup = rows.map(({ id, weight, reps }, index) => (
     <IndexTable.Row
@@ -56,16 +68,31 @@ export function RepsDisplayTable({ data, oneRepMax }: Props) {
   };
 
   return (
-    <IndexTable
-      resourceName={resourceName}
-      itemCount={data.length}
-      selectedItemsCount={
-        allResourcesSelected ? "All" : selectedResources.length
-      }
-      onSelectionChange={handleSelectionChange}
-      headings={[{ title: "Reps" }, { title: "Weight" }]}
-    >
-      {rowMarkup}
-    </IndexTable>
+    <>
+      <LegacyStack distribution="fillEvenly">
+        <LegacyCard title="Projected RepMax's from OneRepMax">
+          <IndexTable
+            resourceName={resourceName}
+            itemCount={data.length}
+            selectedItemsCount={
+              allResourcesSelected ? "All" : selectedResources.length
+            }
+            onSelectionChange={handleSelectionChange}
+            headings={[{ title: "Reps" }, { title: "Weight" }]}
+          >
+            {rowMarkup}
+          </IndexTable>
+        </LegacyCard>
+        <LegacyCard title="Sample Workout">
+          {tutorialExercises && tutorialExercises.length > 0 && (
+            <>
+              {tutorialExercises.map((exercise, index) => {
+                return <p>hey</p>;
+              })}
+            </>
+          )}
+        </LegacyCard>
+      </LegacyStack>
+    </>
   );
 }

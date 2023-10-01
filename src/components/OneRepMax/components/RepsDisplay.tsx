@@ -11,7 +11,7 @@ import { RepsDisplayTable } from "./RepsDisplayTable";
 export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
   const orm_ranges = DEFAULT_REPS.map((num) => {
     return {
-      id: 0,
+      id: num.toString(),
       weight: calculateWeightForReps(oneRepMax, num),
       reps: num,
     };
@@ -19,12 +19,7 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
 
   return (
     <div>
-      <LegacyStack distribution="fillEvenly">
-        <LegacyCard title="Projected RepMax's from OneRepMax">
-          <RepsDisplayTable data={orm_ranges} oneRepMax={oneRepMax} />
-        </LegacyCard>
-        <LegacyCard title="Sample Workouts"></LegacyCard>
-      </LegacyStack>
+      <RepsDisplayTable data={orm_ranges} oneRepMax={oneRepMax} />
     </div>
   );
 }

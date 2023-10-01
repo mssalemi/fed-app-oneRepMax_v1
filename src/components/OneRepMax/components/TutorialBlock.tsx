@@ -32,13 +32,37 @@ export function TutorialBlock({
     exerciseName: exerciseByRepMax.name,
   };
 
+  const workoutPart2 = {
+    sets: 3,
+    reps: exerciseByRepMax.reps,
+    weight: traininigWeight,
+    exerciseName: exerciseByRepMax.name,
+  };
+
+  const workout = [workoutPart1, workoutPart2];
+
   return (
-    <LegacyCard.Section>
-      <Text variant="bodyMd" fontWeight="bold" as="span">
-        {`${workoutPart1.exerciseName} - ${workoutPart1.sets}x${
-          workoutPart1.reps
-        } @ ${Math.round(workoutPart1.weight)}`}
-      </Text>
-    </LegacyCard.Section>
+    <>
+      {workout.map((workoutPart) => {
+        return (
+          <LegacyCard.Section>
+            <Text variant="bodyMd" fontWeight="bold" as="span">
+              {generateWorkoutPartDisplay(workoutPart)}
+            </Text>
+          </LegacyCard.Section>
+        );
+      })}
+    </>
   );
 }
+
+const generateWorkoutPartDisplay = (workoutPart: {
+  sets: number;
+  reps: number;
+  weight: number;
+  exerciseName: string;
+}) => {
+  return `${workoutPart.exerciseName} - ${workoutPart.sets}x${
+    workoutPart.reps
+  } @ ${Math.round(workoutPart.weight)}`;
+};

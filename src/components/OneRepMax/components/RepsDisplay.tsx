@@ -14,9 +14,10 @@ import { DEFAULT_REPS } from "../../../utils/constants/contants";
 import { calculateWeightForReps } from "../../../utils/calculateWeightForReps";
 
 import { RepsDisplayTable } from "./RepsDisplayTable";
-import LegWorkout from "./LegWorkout";
+import Workout from "./Workout";
 
 export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
+  const backWorkoutLoading = true;
   const bench_data = DEFAULT_REPS.map((num) => {
     return {
       id: num.toString(),
@@ -57,7 +58,7 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
     name: string;
     type: string;
     style: string;
-    oneRepMax?: number;
+    oneRepMax: number;
   }[] = [
     {
       name: "Bulgarian Lunge",
@@ -69,16 +70,52 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
       name: "leg extension",
       type: "accessory",
       style: "bodybuilding",
+      oneRepMax: 0,
     },
     {
       name: "leg press",
-      type: "compound",
+      type: "accessory",
       style: "powerlifting",
+      oneRepMax: 0,
     },
     {
       name: "abs",
       type: "accessory",
       style: "bodybuilding",
+      oneRepMax: 0,
+    },
+  ];
+
+  const backExercises = [
+    {
+      name: "Pull-Ups",
+      type: "accessory",
+      style: "bodybuilding",
+      oneRepMax: 30,
+    },
+    {
+      name: "Lat Pulldowns",
+      type: "accessory",
+      style: "bodybuilding",
+      oneRepMax: 0, // Adjust the weight based on your strength level.
+    },
+    {
+      name: "Bent Over Rows",
+      type: "accessory",
+      style: "bodybuilding",
+      oneRepMax: 0,
+    },
+    {
+      name: "Face Pulls",
+      type: "accessory",
+      style: "bodybuilding",
+      oneRepMax: 0,
+    },
+    {
+      name: "T-Bar Rows",
+      type: "accessory",
+      style: "bodybuilding",
+      oneRepMax: 0,
     },
   ];
 
@@ -92,18 +129,25 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
       {tabs[selected].id === "bench-press" && (
         <RepsDisplayTable data={bench_data} oneRepMax={oneRepMax} />
       )}
-      {tabs[selected].id === "pull-up" && (
-        <LegacyCard.Section>
-          <TextContainer>
-            <Text variant="bodyMd" fontWeight="bold" as="span">
-              Coming soon...
-            </Text>
-            <SkeletonDisplayText size="small" />
-            <SkeletonBodyText />
-          </TextContainer>
-        </LegacyCard.Section>
+      {tabs[selected].id === "pull-up" &&
+        (backWorkoutLoading ? (
+          <>
+            <Workout name="Back Workout" exercises={backExercises} />
+          </>
+        ) : (
+          <LegacyCard.Section>
+            <TextContainer>
+              <Text variant="bodyMd" fontWeight="bold" as="span">
+                Coming soon...
+              </Text>
+              <SkeletonDisplayText size="small" />
+              <SkeletonBodyText />
+            </TextContainer>
+          </LegacyCard.Section>
+        ))}
+      {tabs[selected].id === "legs" && (
+        <Workout name="Leg Workout" exercises={legExercises} />
       )}
-      {tabs[selected].id === "legs" && <LegWorkout exercises={legExercises} />}
     </div>
   );
 }

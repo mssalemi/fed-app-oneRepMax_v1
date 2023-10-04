@@ -8,16 +8,17 @@ interface Props {
     name: string;
     type: string;
     style: string;
-    oneRepMax?: number;
+    oneRepMax: number;
   }[];
+  name: string;
 }
 
-function LegWorkout({ exercises }: Props) {
+function Workout({ exercises, name }: Props) {
   return (
     <HorizontalStack gap={"2"}>
       <Card>
         <Text as="h2" variant="bodyMd">
-          Leg Workout
+          {name}
         </Text>
       </Card>
       {exercises.map((exercise, index) => {
@@ -29,4 +30,4 @@ function LegWorkout({ exercises }: Props) {
   );
 }
 
-export default LegWorkout;
+export default Workout;

@@ -14,9 +14,10 @@ import { DEFAULT_REPS } from "../../../utils/constants/contants";
 import { calculateWeightForReps } from "../../../utils/calculateWeightForReps";
 
 import { RepsDisplayTable } from "./RepsDisplayTable";
+import LegWorkout from "./LegWorkout";
 
 export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
-  const orm_ranges = DEFAULT_REPS.map((num) => {
+  const bench_data = DEFAULT_REPS.map((num) => {
     return {
       id: num.toString(),
       weight: calculateWeightForReps(oneRepMax, num),
@@ -43,9 +44,43 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
       content: "Pull Ups",
       panelID: "pull-ups-content-1",
     },
+    {
+      id: "legs",
+      content: "Legs",
+      panelID: "legs-content-1",
+    },
   ];
 
   console.log("selected", tabs[selected]);
+
+  const legExercises: {
+    name: string;
+    type: string;
+    style: string;
+    oneRepMax?: number;
+  }[] = [
+    {
+      name: "Bulgarian Lunge",
+      type: "compound",
+      style: "bobdybuilding",
+      oneRepMax: 40,
+    },
+    {
+      name: "leg extension",
+      type: "accessory",
+      style: "bodybuilding",
+    },
+    {
+      name: "leg press",
+      type: "compound",
+      style: "powerlifting",
+    },
+    {
+      name: "abs",
+      type: "accessory",
+      style: "bodybuilding",
+    },
+  ];
 
   return (
     <div>
@@ -55,7 +90,7 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
         </LegacyCard.Section>
       </Tabs>
       {tabs[selected].id === "bench-press" && (
-        <RepsDisplayTable data={orm_ranges} oneRepMax={oneRepMax} />
+        <RepsDisplayTable data={bench_data} oneRepMax={oneRepMax} />
       )}
       {tabs[selected].id === "pull-up" && (
         <LegacyCard.Section>
@@ -68,6 +103,7 @@ export function RepsDisplay({ oneRepMax }: { oneRepMax: number }) {
           </TextContainer>
         </LegacyCard.Section>
       )}
+      {tabs[selected].id === "legs" && <LegWorkout exercises={legExercises} />}
     </div>
   );
 }
